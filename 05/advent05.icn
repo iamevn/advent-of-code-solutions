@@ -1,0 +1,54 @@
+procedure main(argv)
+    TheList := argv[1] | "input"
+    listfile := open(TheList)
+    niceAcount := 0
+    niceBcount := 0
+    while line := read(listfile) do {
+        if niceA(line) then niceAcount +:= 1 
+        if niceB(line) then niceBcount +:= 1 
+    }
+    close(listfile)
+
+    write(niceAcount, " old nice strings")
+    write(niceBcount, " new nice strings")
+end
+
+procedure nicevowelcount(S)
+    vowel := 'aeiou'
+    count := 0
+    S ? every upto(vowel) do count +:= 1
+    return 3 <= count
+end
+
+procedure doubledletter(S)
+    return S ? find("aa"|"bb"|"cc"|"dd"|"ee"|"ff"|"gg"|"hh"|"ii"|"jj"|"kk"|"ll"|"mm"|"nn"|"oo"|"pp"|"qq"|"rr"|"ss"|"tt"|"uu"|"vv"|"ww"|"xx"|"yy"|"zz")
+end
+
+procedure badsubs(S)
+    return S ? find("ab"|"cd"|"pq"|"xy")
+end
+
+procedure niceA(S)
+    return nicevowelcount(S) & doubledletter(S) & not badsubs(S)
+end
+
+procedure pairtwice(S)
+    S ? while s := move(2) do {
+        if find(s) then return s
+        move(-1)
+    }
+    fail
+end
+
+procedure sandwich(S)
+    S ? while s := move(1) do {
+        if not move(1) then fail
+        if s == move(1) then return &pos - 2
+        move(-1)
+    }
+end
+
+procedure niceB(S)
+    return pairtwice(S) & sandwich(S)
+    fail
+end
