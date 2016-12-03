@@ -17,7 +17,6 @@ def check(a, b, c):
 def checktri(sides):
     return check(sides[0], sides[1], sides[2]) \
        and check(sides[0], sides[2], sides[1]) \
-       and check(sides[1], sides[0], sides[2]) \
        and check(sides[1], sides[2], sides[0])
 
 possible_count = 0
