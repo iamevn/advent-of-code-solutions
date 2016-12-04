@@ -1,12 +1,12 @@
 99*:00"tupni"i$$>v  ;stack has number of lines left on top;
 <v  < v k!`0:    <  +-10
- > & & & 74p54p34p 74g54g+34g v
+ > & & & 73p53p33p 73g53g+33g v
    A B C           C + B > A  `
     ^ <                       !
-^                             _ 34g54g+74g v
+^                             _ 33g53g+73g v
                                 A + B > C  `
                                            !
-^                                          _ 34g74g+54g v
+^                                          _ 33g73g+53g v
                                              A + C > B  `
                                                         !
 ^                                                       _ ;triangle checks out; 046*g1+046*p
