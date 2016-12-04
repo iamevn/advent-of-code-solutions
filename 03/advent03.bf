@@ -21,3 +21,10 @@
           !triangle checks out
 ^         _48*:1g1+:.0pv
 ^                      <
+ for some reason ip never
+ reaches these last two options
+
+ run like so:
+ $ cfunge advent03.bf < input
+ it requires that the input file be named "input"
+ as well as that the input file be redirected in on stdin
