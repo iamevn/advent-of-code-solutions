@@ -26,6 +26,8 @@ def matches(letters, cksum):
             for c in cksum:
                 if letters[l] > letters[c]:
                     return False
+                if letters[l] == letters[c] and ord(l) < ord(c):
+                    return False
     return True
 
 for line in input:
@@ -46,7 +48,7 @@ for line in input:
         sum += number
 
 
-# print(sum)
+print(sum)
 # part 2
 
 input.seek(0)
