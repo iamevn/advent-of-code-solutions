@@ -56,7 +56,7 @@ input.seek(0)
 def incChar(ch, n):
     new = ord(ch) + (n % 26)
     if new > ord('z'):
-        new -= ord('a')
+        new -= 26
     return chr(new)
 
 def decode(words, number):
