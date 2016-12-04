@@ -9,7 +9,7 @@
 ^                                          _ 34g74g+54g v
                                              A + C > B  `
                                                         !
-^                                                       _ ;triangle checks out; 48*:1g1+:68*-.1p
+^                                                       _ ;triangle checks out; 48*1g1+:68*-.48*1p
  for some reason ip never
  reaches these last two options
 
