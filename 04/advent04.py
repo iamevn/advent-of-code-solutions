@@ -16,8 +16,6 @@ sum = 0
 def matches(letters, cksum):
     #if any letters not in cksum are greater than those in cksum, false
     #else true
-    # print(letters)
-    # print(cksum)
     for c in cksum:
         if not c in letters:
             return False
