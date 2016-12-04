@@ -15,8 +15,3 @@
  $ cfunge advent03.bf < input
  it requires that the input file be named "input"
  as well as that the input file be redirected in on stdin
-
- "works" right now but I'd like to get rid of the '.a,' on line 12
- and instead just ouput once the count once at the end on line 13
- to do this I should just need to change the '.a,' on line 12 to a '$',
- and change the '@' on line 2 to a 'v'. this doesn't work for some reason
