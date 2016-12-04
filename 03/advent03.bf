@@ -1,18 +1,15 @@
 99*:00"tupni"i$$>v  ;stack has number of lines left on top;
-<v       @k!`0:.:<  ;valid tris=0;                    +-10
- > & & & 74p54p34p 34g54g74g v
-                             +
-   A B C           C + B < A `
-                             !
-^                            _ 74g54g34g v
-                                         +
-                               A + B < C `
-                                         !
-^                                        _ 54g74g34g v
-                                                     +
-                                           A + C < B `
-                                                     !
-^                                                    _ ;triangle checks out; 48*:1g1+:.0p
+<v       @k!`0:  <  ;valid tris=0;                    +-10
+ > & & & 74p54p34p 74g54g+34g v
+   A B C           C + B > A  `
+                              !
+^                             _ 34g54g+74g v
+                                A + B > C  `
+                                           !
+^                                          _ 34g74g+54g v
+                                             A + C > B  `
+                                                        !
+^                                                       _ ;triangle checks out; 48*:1g1+:68*-.1p
  for some reason ip never
  reaches these last two options
 
