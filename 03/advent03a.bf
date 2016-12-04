@@ -12,6 +12,6 @@
 ^                                                       _ ;triangle checks out; 046*g1+046*p
         > 046*g48*-.a,@
  run like so:
- $ cfunge advent03.bf < input
+ $ cfunge advent03a.bf < input
  it requires that the input file be named "input"
  as well as that the input file be redirected in on stdin
