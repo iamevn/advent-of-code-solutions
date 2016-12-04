@@ -1,8 +1,8 @@
 99*:00"tupni"i$$>v  ;stack has number of lines left on top;
-<v     vk!`0:    <  +-10
+<v  < v k!`0:    <  +-10
  > & & & 74p54p34p 74g54g+34g v
    A B C           C + B > A  `
-                              !
+    ^ <                       !
 ^                             _ 34g54g+74g v
                                 A + B > C  `
                                            !
