@@ -1,5 +1,5 @@
 99*:00"tupni"i$$>v  ;stack has number of lines left on top;
-<v      @k!`0:   <  +-10
+<v     vk!`0:    <  +-10
  > & & & 74p54p34p 74g54g+34g v
    A B C           C + B > A  `
                               !
@@ -9,7 +9,7 @@
 ^                                          _ 34g74g+54g v
                                              A + C > B  `
                                                         !
-^                                                       _ ;triangle checks out; 046*g1+:48*-.a,046*p
+^                                                       _ ;triangle checks out; 046*g1+046*p
         > 046*g48*-.a,@
  run like so:
  $ cfunge advent03.bf < input
