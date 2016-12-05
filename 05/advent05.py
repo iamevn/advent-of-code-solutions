@@ -6,6 +6,8 @@ import sys
 doorid = b"abbhdwsy"
 password = ""
 
+print("________\r", end='')
+
 def check(i):
     m = md5(doorid + str(i).encode()).digest()
     if m[0] & b'\xFF'[0] == 0 \
@@ -15,11 +17,8 @@ def check(i):
     else:
         return False
 
-# there is definitely a stdlib function for this but muh speed
 def toChar(i):
-    return { 0 : '0', 1 : '1', 2 : '2', 3 : '3', 4 : '4',
-             5 : '5', 6 : '6', 7 : '7', 8 : '8', 9 : '9', 10: 'a',
-             11: 'b', 12: 'c', 13: 'd', 14: 'e', 15: 'f'}[i]
+    return hex(i)[-1]
 
 i = 0
 while len(password) < 8:
@@ -32,7 +31,6 @@ while len(password) < 8:
     i += 1
 
 print('')
-# print(password)
 
 # part 2
 
