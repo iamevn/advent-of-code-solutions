@@ -13,17 +13,17 @@ def check(i):
     if m[0] & b'\xFF'[0] == 0 \
     and m[1] & b'\xFF'[0] == 0\
     and m[2] & b'\xF0'[0] == 0:
-        return toChar(m[2] & b'\x0F'[0])
+        return True, toChar(m[2] & b'\x0F'[0])
     else:
-        return False
+        return False, False
 
 def toChar(i):
     return hex(i)[-1]
 
 i = 0
 while len(password) < 8:
-    g = check(i)
-    if g:
+    found, g = check(i)
+    if found:
         print("{}".format(g), end='')
         sys.stdout.flush()
 
