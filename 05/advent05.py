@@ -3,10 +3,15 @@
 from hashlib import md5
 import sys, random
 
-print("HACKING EASTER.EXE")
+print("\033[7mHACKING EASTER.EXE\033[0m")
 
 doorid = b"abbhdwsy"
 password = ""
+
+GREEN   = '\033[92m'
+NORMAL = '\033[0m'
+RED    = '\033[91m'
+BLINK  = '\033[5m'
 
 print("________\r", end='')
 
@@ -24,18 +29,18 @@ while len(password) < 8:
     if found:
         password = password + found
     if timer == 0:
-        print('\rhacking...', end='')
-        print(password, end='')
+        print('\r' + BLINK + 'hacking' + NORMAL + '...', end='')
+        print(GREEN + password + NORMAL, end='')
         for j in range(8 - len(password)):
             c = hex(random.randint(0,15))[-1]
-            print(c, end='')
+            print(RED + c + NORMAL, end='')
         timer = 10000
     else:
         timer -= 1
 
     i += 1
 
-print('\rhacking...' + password)
+print('\rhacking...' + GREEN + password)
 
 # part 2
 
@@ -47,17 +52,19 @@ def check2(i):
     return True, int(m[5], base=16), m[6]
 
 password = "________"
-print('\ralmost....' + password, end='')
+print('\r' + BLINK + 'almost' + NORMAL + '....' + password, end='')
 
 i = 0
 timer = 10000
 
 def printHax(p):
-    print('\ralmost....', end='')
+    print('\r' + BLINK + 'almost' + NORMAL + '....', end='')
     for c in p:
         if c == '_':
             c = hex(random.randint(0,15))[-1]
-        print(c, end='')
+            print(RED + c + NORMAL, end='')
+        else:
+            print(GREEN + c + NORMAL, end='')
 
 while '_' in password:
     found, index, char = check2(i)
@@ -72,6 +79,6 @@ while '_' in password:
     else:
         timer -= 1
 
-print('\ralmost....' + password)
+print('\ralmost....' + GREEN + password + NORMAL)
 print('\n*hacker voice* I\'m in')
 
