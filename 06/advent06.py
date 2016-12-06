@@ -44,7 +44,7 @@ print("")
 # part 2
 def leastCommonIn(dict):
     guess = ''
-    count = 99999999999999
+    count = float('inf')
     for key in dict:
         if dict[key] < count:
             guess = key
