@@ -1,8 +1,8 @@
 99*:00"tupni"i$$>v  (stack has number of lines left on top)
 <v  < v k!`0:    <  +-30             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
  > & & & 73p53p33p & & & 75p55p35p v ; run like so:                                        ;
-   A B C                             ; $ cfunge advent03b.bf < input                       ;
-    ^ <  v p73 p75 p77 & & &       < ; it requires that the input file be named "input"    ;
+   A B C v p73 p75 p77 & & &       < ; $ cfunge advent03b.bf < input                       ;
+    ^ <                              ; it requires that the input file be named "input"    ;
    D E F > 33g35g+37gv               ; as well as that the input be redirected in on stdin ;
            A + D > G `               ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
    G H I             !
