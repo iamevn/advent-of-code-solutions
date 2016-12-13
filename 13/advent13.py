@@ -96,6 +96,23 @@ def shortestPath(origin, destination):
     return "FAILED TO FIND PATH"
 
 path = shortestPath((1, 1), target)
+print("")
+print("             111111111122222222223333")
+print("   0123456789012345678901234567890123")
+for j in range(42):
+    if (j < 10):
+        print(j, end="  ")
+    else:
+        print(j, end=" ")
+    for i in range(34):
+        if isWall((i, j)):
+            print("#", end="")
+        elif (i, j) in path:
+            print("o", end="")
+        else:
+            print(".", end="")
+    print("")
+print("")
 print(len(path) - 1)
 
 # part 2
