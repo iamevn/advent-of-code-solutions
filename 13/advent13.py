@@ -75,7 +75,6 @@ def shortestPath(origin, destination):
         for node in openSet:
             if (not current) or (fScore[node] < fScore[current]):
                 current = node
-        # print("visiting {}".format(current))
         if current == destination:
             return walkPath(current)
 
@@ -97,5 +96,41 @@ def shortestPath(origin, destination):
     return "FAILED TO FIND PATH"
 
 path = shortestPath((1, 1), target)
-print(path)
 print(len(path) - 1)
+
+# part 2
+def walk(start, distance):
+    reachable = {0:{start}}
+    nodes = {start}
+    for i in range(1, distance + 1):
+        reachable[i] = set()
+        for node in reachable[i - 1]:
+            for neighbor in neighbors(node):
+                if not neighbor in nodes:
+                    reachable[i].add(neighbor)
+                    nodes.add(neighbor)
+    return nodes
+
+reachable = walk((1, 1), 50)
+
+print("")
+print("             111111111122222")
+print("   0123456789012345678901234")
+for j in range(27):
+    if (j < 10):
+        print(j, end="  ")
+    else:
+        print(j, end=" ")
+    for i in range(25):
+        if isWall((i, j)):
+            print("#", end="")
+        elif (i, j) in reachable:
+            print("o", end="")
+        else:
+            print(".", end="")
+    print("")
+
+
+print("")
+print(len(reachable))
+# not 223 or 222
