@@ -14,6 +14,8 @@ if len(argv) > 1:
 def isWall(coord):
     x = coord[0]
     y = coord[1]
+    if x < 0 or y < 0:
+        return True #let's make negative coords walled off
     check = x*x + 3*x + 2*x*y + y + y*y
     check += input
     # count number of 1 bits in binary representaion of check.
@@ -113,6 +115,7 @@ for j in range(42):
             print(".", end="")
     print("")
 print("")
+print("Shortest path from {} to {}:".format((1, 1), target))
 print(len(path) - 1)
 
 # part 2
@@ -149,5 +152,5 @@ for j in range(27):
 
 
 print("")
+print("Spaces reachable within 50 steps:")
 print(len(reachable))
-# not 223 or 222
