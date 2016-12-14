@@ -39,11 +39,10 @@ def find64th(hash_fn=genHash):
             found_count += 1
             # this is silly but I like it
             print("found key number {} at {}".format(found_count, i), end="\r")
-    print("                                       ", end="\r")
+    print("")
     return i
 
 i = find64th(genHash)
-print("found 64th key at {}".format(i))
 print(genHash(i))
 print("")
 
@@ -56,5 +55,4 @@ def stretch(hash):
     return hash
 
 i = find64th(lambda i: stretch(genHash(i)))
-print("found 64th key at {}".format(i))
 print(stretch(genHash(i)))
