@@ -41,14 +41,14 @@ def solve(input, part=1):
             return (room[0] + 1, room[1])
 
     branch_points = set() # set of tuples: (tuple: (x, y), string: path)
-    # search for path
-    path = ""
-    doors = unlockedDoors(start_room, path)
+    # set up branch_points with first room's doors
+    doors = unlockedDoors(start_room, "")
     for dir in doors:
         if doors[dir]:
-            branch_points.add((move(start_room, dir), path + dir))
+            branch_points.add((move(start_room, dir), dir))
 
-    def find_shortest():
+    # find shortest
+    if part == 1:
         while True:
             if len(branch_points) == 0:
                 # shouldn't be here, there's no path
@@ -57,8 +57,6 @@ def solve(input, part=1):
             room, path = min(branch_points, key = lambda p : len(p[1]))
 
             if room == vault_room:
-                # print("we've made it!")
-                # print("took {} steps, path:".format(len(path)))
                 return path
 
             branch_points.remove((room, path))
@@ -67,15 +65,15 @@ def solve(input, part=1):
             for dir in doors:
                 if doors[dir]:
                     branch_points.add((move(room, dir), path + dir))
-    def find_longest():
+
+    # find longest
+    if part == 2:
         found_path = ""
         while True:
             if len(branch_points) == 0:
                 return found_path
-                break
 
             room, path = min(branch_points, key = lambda p : len(p[1]))
-
             branch_points.remove((room, path))
 
             if room == vault_room:
@@ -86,10 +84,6 @@ def solve(input, part=1):
                     if doors[dir]:
                         branch_points.add((move(room, dir), path + dir))
         return "NO PATH"
-    if part == 1:
-        return find_shortest()
-    else:
-        return find_longest()
 
 
 assert(solve(b"ihgpwlah") == "DDRRRD")
