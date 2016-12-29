@@ -80,11 +80,14 @@ def playAroundWithTermStuff():
 print("\0337", end="\n\n\n\n")
 stdout.flush()
 
-def printBoard(board, convert=False, convertMore=False):
-    if convertMore:
+def printBoard(board, convert=0):
+    if convert > 0:
         board = int2ints(board)
-    if convert:
+        convert -= 1
+    if convert > 0:
         board = ints2board(board)
+        convert -= 1
+
     print("\0338", end="")
     stdout.flush()
     for f in [4,3,2,1]:
@@ -108,6 +111,7 @@ def printBoard(board, convert=False, convertMore=False):
 printBoard(board)
 print(elements)
 
+# helper functions
 def board2ints(board):
     digits = [board['elevator']]
     for e in elements:
@@ -146,3 +150,69 @@ def board2int(board):
 def int2board(i):
     return ints2board(int2ints(i))
 
+# the pathfinding stuff, mostly uses the base 5 integer representation internally
+
+def heuristicLength(origin, destination):
+    origin = int2ints(origin)
+    destination = int2ints(destination)
+
+    distance = 0
+    for i in range(len(destination)):
+        distance += abs(destination[i] - origin[i])
+
+    return distance
+
+def neighbors(state):
+    # return set of neighboring states that are valid
+    pass
+
+from collections import defaultdict
+# based on the wikipedia article on A* (adapted from advent13.py)
+def shortestPath(origin, destination):
+    # evaluated states
+    closedSet = set()
+    # discovered states yet to be evaluated
+    openSet = set()
+    openSet.add(origin)
+    # probably don't need cameFrom or walkPath
+
+    # the cost of getting from start to a state
+    gScore = defaultdict(lambda: float('inf'))
+    gScore[origin] = 0
+
+    # the cost of getting from start to end through a state
+    # start to state is known, state to goal is by heuristic
+    fScore = defaultdict(lambda: float('inf'))
+    fScore[origin] = heuristicLength(origin, destination)
+
+    while len(openSet) > 0:
+        # state in openSet with lowest fScore
+        current = None
+        for state in openSet:
+            if (not current) or (fScore[state] < fScore[current]):
+                current = state
+        if current == destination:
+            return gScore[current]
+
+        openSet.remove(current)
+        closedSet.add(current)
+
+        for neighbor in neighbors(current):
+            if neighbor in closedSet:
+                continue # neighbor is already evaluated
+            tentative_gScore = gScore[current] + 1
+            if not neighbor in openSet:
+                openSet.add(neighbor)
+            elif tentative_gScore >= gScore[neighbor]:
+                continue # not a better path
+            # on best path so far
+            cameFrom[neighbor] = current
+            gScore[neighbor] = tentative_gScore
+            fScore[neighbor] = gScore[neighbor] + heuristicLength(neighbor, destination)
+    return False # FAILED TO FIND PATH, shouldn't happen
+
+
+# the goal is all 4s for each slot in my base 5 representation
+goal = (5 ** len(board2ints(board))) - 1
+
+print(shortestPath(board2int(board), goal))
