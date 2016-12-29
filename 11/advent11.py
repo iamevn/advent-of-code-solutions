@@ -162,10 +162,63 @@ def heuristicLength(origin, destination):
 
     return distance
 
+# this is probably a bottleneck
+def validBoard(board):
+    # elevator outside bounds
+    if not 1 <= board['elevator'] <= 4:
+        return False
+    # a microchip isn't on the same floor as its generator but is on the same floor as another generator
+    for e in elements:
+        if board['generator'][e] != board['microchip'][e]:
+            for g in board['generator']:
+                if board['generator'][g] == board['microchip'][e]:
+                    return False
+    return True
+
+def validStateArr(arr):
+    # still runs in n^2 time but probably faster than validBoard
+    if not 1 <= arr[0] <= 4:
+        return False
+    for i in range(2, len(arr), 2):
+        if arr[i] != arr[i-1]:
+            for j in range(1, len(arr), 2):
+                if arr[i] == arr[j]:
+                    return False
+    return True
+
+def validState(state):
+    # return validBoard(int2board(state))
+    return validStateArr(int2ints(state))
+
+
 def neighbors(state):
     # return set of neighboring states that are valid
-    pass
+    valid_neighbors = set()
 
+    state_arr = int2ints(state)
+    floor = state_arr[0]
+    on_floor = set()
+    for i in range(1, len(state_arr)):
+        if state_arr[i] == floor:
+            on_floor.add(i)
+    for i in on_floor:
+        for j in on_floor:
+            if floor < 4:
+                modState = state + 1
+                modState += 5 ** i
+                if i != j:
+                    modState += 5 ** j
+                if validState(modState):
+                    valid_neighbors.add(modState)
+            if floor > 1:
+                modState = state - 1
+                modState -= 5 ** i
+                if i != j:
+                    modState -= 5 ** j
+                if validState(modState):
+                    valid_neighbors.add(modState)
+    return valid_neighbors
+    
 from collections import defaultdict
 # based on the wikipedia article on A* (adapted from advent13.py)
 def shortestPath(origin, destination):
@@ -206,7 +259,6 @@ def shortestPath(origin, destination):
             elif tentative_gScore >= gScore[neighbor]:
                 continue # not a better path
             # on best path so far
-            cameFrom[neighbor] = current
             gScore[neighbor] = tentative_gScore
             fScore[neighbor] = gScore[neighbor] + heuristicLength(neighbor, destination)
     return False # FAILED TO FIND PATH, shouldn't happen
