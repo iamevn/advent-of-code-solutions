@@ -160,7 +160,7 @@ def heuristicLength(origin, destination):
     for i in range(len(destination)):
         distance += abs(destination[i] - origin[i])
 
-    return distance
+    return distance / 3
 
 # this is probably a bottleneck
 def validBoard(board):
