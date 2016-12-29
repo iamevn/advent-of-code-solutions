@@ -220,14 +220,49 @@ def neighbors(state):
     return valid_neighbors
     
 from collections import defaultdict
+
+# credits to https://joernhees.de/blog/2010/07/19/min-heap-in-python/
+import heapq
+class Heap(object):
+    """ A neat min-heap wrapper which allows storing items by priority
+        and get the lowest item out first (pop()).
+        Also implements the iterator-methods, so can be used in a for
+        loop, which will loop through all items in increasing priority order.
+        Remember that accessing the items like this will iteratively call
+        pop(), and hence empties the heap! """
+
+    def __init__(self):
+        """ create a new min-heap. """
+        self._heap = []
+
+    def push(self, priority, item):
+        """ Push an item with priority into the heap.
+            Priority 0 is the highest, which means that such an item will
+            be popped first."""
+        assert priority >= 0
+        heapq.heappush(self._heap, (priority, item))
+
+    def pop(self):
+        """ Returns the item with lowest priority. """
+        item = heapq.heappop(self._heap)[1] # (prio, item)[1] == item
+        return item
+
+    def __len__(self):
+        return len(self._heap)
+
+    def __iter__(self):
+        """ Get all elements ordered by asc. priority. """
+        return self
+
+    def next(self):
+        """ Get all elements ordered by their priority (lowest first). """
+        try:
+            return self.pop()
+        except IndexError:
+            raise StopIteration
+
 # based on the wikipedia article on A* (adapted from advent13.py)
 def shortestPath(origin, destination):
-    # evaluated states
-    closedSet = set()
-    # discovered states yet to be evaluated
-    openSet = set()
-    openSet.add(origin)
-    # probably don't need cameFrom or walkPath
 
     # the cost of getting from start to a state
     gScore = defaultdict(lambda: float('inf'))
@@ -238,29 +273,36 @@ def shortestPath(origin, destination):
     fScore = defaultdict(lambda: float('inf'))
     fScore[origin] = heuristicLength(origin, destination)
 
+    # evaluated states
+    closedSet = set()
+    # discovered states yet to be evaluated
+    openHeap = Heap()
+    openHeap.push(fScore[origin], origin)
+    openSet = set()
+    openSet.add(origin)
+
     while len(openSet) > 0:
         # state in openSet with lowest fScore
-        current = None
-        for state in openSet:
-            if (not current) or (fScore[state] < fScore[current]):
-                current = state
+        current = openHeap.pop()
+        openSet.remove(current)
+
         if current == destination:
             return gScore[current]
 
-        openSet.remove(current)
         closedSet.add(current)
 
         for neighbor in neighbors(current):
             if neighbor in closedSet:
                 continue # neighbor is already evaluated
             tentative_gScore = gScore[current] + 1
-            if not neighbor in openSet:
-                openSet.add(neighbor)
-            elif tentative_gScore >= gScore[neighbor]:
+            if neighbor in openSet and tentative_gScore >= gScore[neighbor]:
                 continue # not a better path
             # on best path so far
             gScore[neighbor] = tentative_gScore
             fScore[neighbor] = gScore[neighbor] + heuristicLength(neighbor, destination)
+            if not neighbor in openSet:
+                openHeap.push(fScore[neighbor], neighbor)
+                openSet.add(neighbor)
     return False # FAILED TO FIND PATH, shouldn't happen
 
 
