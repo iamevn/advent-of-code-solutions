@@ -77,6 +77,7 @@ def playAroundWithTermStuff():
             print("\n\n\n\n")
             return
 
+print(elements)
 print("\0337", end="\n\n\n\n")
 stdout.flush()
 
@@ -99,17 +100,17 @@ def printBoard(board, convert=0):
             print(".  ", end = "")
         for e in elements:
             if board['generator'][e] == f:
-                print(e[0], end = "G ")
+                print(e[0].upper(), end = "G ")
             else:
                 print(".  ", end = "")
             if board['microchip'][e] == f:
-                print(e[0], end = "M ")
+                print(e[0].upper(), end = "M ")
             else:
                 print(".  ", end = "")
         print("")
 
 printBoard(board)
-print(elements)
+print("")
 
 # helper functions
 def board2ints(board):
@@ -281,13 +282,23 @@ def shortestPath(origin, destination):
     openSet = set()
     openSet.add(origin)
 
+    previousState = {origin:None}
+
     while len(openSet) > 0:
         # state in openSet with lowest fScore
         current = openHeap.pop()
         openSet.remove(current)
 
         if current == destination:
-            return gScore[current]
+            # return gScore[current]
+            # walk back through previous states to build path
+            walk = destination
+            path = [destination]
+            while walk != origin:
+                walk = previousState[walk]
+                path.append(walk)
+            path.reverse()
+            return path
 
         closedSet.add(current)
 
@@ -300,6 +311,7 @@ def shortestPath(origin, destination):
             # on best path so far
             gScore[neighbor] = tentative_gScore
             fScore[neighbor] = gScore[neighbor] + heuristicLength(neighbor, destination)
+            previousState[neighbor] = current
             if not neighbor in openSet:
                 openHeap.push(fScore[neighbor], neighbor)
                 openSet.add(neighbor)
@@ -309,4 +321,20 @@ def shortestPath(origin, destination):
 # the goal is all 4s for each slot in my base 5 representation
 goal = (5 ** len(board2ints(board))) - 1
 
-print(shortestPath(board2int(board), goal))
+path = shortestPath(board2int(board), goal)
+# print(path)
+c = ""
+index = 0
+while c != 'q':
+    if c == 'j':
+        index += 1
+    elif c == 'k':
+        index -= 1
+    if index < 0:
+        index = 0
+    if index >= len(path):
+        index = len(path) - 1
+    printBoard(path[index], convert=2)
+    print("                                                                      ", end="\r")
+    print(f"{index} / {len(path)-1}\n[j]/[k] to step forward/back, [q] to quit")
+    c = getch()
