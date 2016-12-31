@@ -1,4 +1,5 @@
 #!/usr/bin/env python3.6
+fancy_output = False
 
 from sys import argv,exit,stdin,stdout
 
@@ -284,10 +285,16 @@ def shortestPath(origin, destination):
 
     previousState = {origin:None}
 
+    maxG = 0
+
     while len(openSet) > 0:
         # state in openSet with lowest fScore
         current = openHeap.pop()
         openSet.remove(current)
+
+        if gScore[current] > maxG:
+            maxG = gScore[current]
+            print(f"searching...{maxG}", end="\r")
 
         if current == destination:
             # return gScore[current]
@@ -322,19 +329,21 @@ def shortestPath(origin, destination):
 goal = (5 ** len(board2ints(board))) - 1
 
 path = shortestPath(board2int(board), goal)
-# print(path)
-c = ""
-index = 0
-while c != 'q':
-    if c == 'j':
-        index += 1
-    elif c == 'k':
-        index -= 1
-    if index < 0:
-        index = 0
-    if index >= len(path):
-        index = len(path) - 1
-    printBoard(path[index], convert=2)
-    print("                                                                      ", end="\r")
-    print(f"{index} / {len(path)-1}\n[j]/[k] to step forward/back, [q] to quit")
-    c = getch()
+if fancy_output:
+    c = ""
+    index = 0
+    while c != 'q':
+        if c == 'j':
+            index += 1
+        elif c == 'k':
+            index -= 1
+        if index < 0:
+            index = 0
+        if index >= len(path):
+            index = len(path) - 1
+        printBoard(path[index], convert=2)
+        print("                                                                      ", end="\r")
+        print(f"{index} / {len(path)-1}\n[j]/[k] to step forward/back, [q] to quit")
+        c = getch()
+else:
+    print(len(path) - 1)
